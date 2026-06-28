@@ -7,7 +7,7 @@
 <meta name="description" content="ClinicPro transforme votre site en machine à patients — suivi automatique, publicité ciblée et zéro lead perdu pour les cabinets dentaires de Casablanca.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,500;6..96,600;6..96,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
     --navy:#0A2540;
@@ -17,6 +17,8 @@
     --muted:#6B7280;
     --white:#FFFFFF;
     --amber:#D97706;
+    --ease-out:cubic-bezier(0.23,1,0.32,1);
+    --ease-in-out:cubic-bezier(0.77,0,0.175,1);
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html{scroll-behavior:smooth;}
@@ -27,7 +29,7 @@
     -webkit-font-smoothing:antialiased;
     overflow-x:hidden;
   }
-  h1,h2,h3{font-family:'Playfair Display', Georgia, serif;}
+  h1,h2,h3{font-family:'Bodoni Moda', Georgia, serif; font-optical-sizing:auto;}
   img{max-width:100%;display:block;}
   button{font-family:inherit;border:none;cursor:pointer;}
   a{text-decoration:none;color:inherit;}
@@ -54,17 +56,20 @@
     padding:16px 32px;
     font-weight:600;
     font-size:16px;
-    transition:transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    transition:transform 160ms var(--ease-out), box-shadow 160ms var(--ease-out), background 160ms var(--ease-out);
   }
+  .btn:active{transform:scale(0.97);}
   .btn-teal{background:var(--teal);color:#fff;box-shadow:0 8px 20px -8px rgba(0,184,150,0.5);}
-  .btn-teal:hover{transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(0,184,150,0.55);}
+  .btn-teal:hover{transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(0,184,150,0.55);}
   .btn-teal:focus-visible{outline:2px solid var(--navy);outline-offset:2px;}
-  .btn-teal:active{transform:translateY(0);}
+  .btn-teal:active{transform:scale(0.97);}
   .btn-outline-navy{background:transparent;border:1.5px solid var(--navy);color:var(--navy);}
   .btn-outline-navy:hover{background:var(--navy);color:#fff;}
   .btn-outline-navy:focus-visible{outline:2px solid var(--teal);outline-offset:2px;}
   .btn-navy{background:var(--navy);color:#fff;}
-  .btn-navy:hover{transform:translateY(-2px);box-shadow:0 12px 24px -8px rgba(10,37,64,0.45);}
+  .btn-navy:hover{transform:translateY(-2px);box-shadow:0 14px 28px -8px rgba(10,37,64,0.45);}
+  .btn-ghost{background:transparent;color:var(--navy);text-decoration:underline;text-decoration-color:rgba(10,37,64,0.25);text-underline-offset:3px;padding:14px 0;box-shadow:none;font-weight:500;}
+  .btn-ghost:hover{text-decoration-color:var(--navy);}
 
   .reveal{opacity:0;transform:translateY(24px);transition:opacity 0.5s ease, transform 0.5s ease;}
   .reveal.is-visible{opacity:1;transform:translateY(0);}
@@ -115,13 +120,22 @@
     background:var(--navy);overflow:hidden;
   }
   .hero-bg{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;}
-  .hero-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(10,37,64,0.62);z-index:1;}
+  .hero-overlay{
+    position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;
+    background:linear-gradient(100deg, rgba(10,37,64,0.93) 0%, rgba(10,37,64,0.78) 32%, rgba(10,37,64,0.42) 62%, rgba(10,37,64,0.16) 100%);
+  }
+  .hero-grain{
+    position:absolute;top:0;left:0;width:100%;height:100%;z-index:1;opacity:0.5;mix-blend-mode:overlay;pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  }
   .hero-content{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:140px 24px 80px;width:100%;}
-  .hero-headline{font-weight:600;color:#fff;font-size:52px;line-height:1.15;max-width:680px;}
+  .hero-headline{font-weight:600;color:#fff;font-size:54px;line-height:1.14;max-width:640px;letter-spacing:-0.01em;text-shadow:0 4px 28px rgba(0,0,0,0.28);}
+  .hero-headline em{color:var(--teal);font-style:normal;}
   .hero-headline-mobile{display:none;}
-  .hero-sub{font-size:18px;color:rgba(255,255,255,0.85);max-width:560px;margin-top:20px;line-height:1.6;}
+  .eyebrow-mobile{display:none;}
+  .hero-sub{font-size:18px;color:rgba(255,255,255,0.88);max-width:540px;margin-top:22px;line-height:1.65;text-shadow:0 2px 12px rgba(0,0,0,0.2);}
   .hero-cta{margin-top:36px;}
-  .hero-trust{font-size:13px;color:rgba(255,255,255,0.6);margin-top:16px;}
+  .hero-trust{font-size:13px;color:rgba(255,255,255,0.65);margin-top:18px;}
   .scroll-indicator{
     position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;
     opacity:0.5;animation:bounce 2s infinite;transition:opacity 0.3s;
@@ -129,9 +143,12 @@
   @keyframes bounce{0%,100%{transform:translate(-50%,0);}50%{transform:translate(-50%,8px);}}
   @media(max-width:768px){
     .hero{min-height:88vh;align-items:flex-end;}
+    .hero-overlay{background:linear-gradient(180deg, rgba(10,37,64,0.22) 0%, rgba(10,37,64,0.58) 45%, rgba(10,37,64,0.94) 100%);}
     .hero-content{padding:120px 20px 64px;}
     .hero-headline-desktop{display:none;}
-    .hero-headline-mobile{display:block;font-weight:600;color:#fff;font-size:34px;line-height:1.2;}
+    .hero-headline-mobile{display:block;font-weight:600;color:#fff;font-size:36px;line-height:1.22;letter-spacing:-0.01em;text-shadow:0 4px 24px rgba(0,0,0,0.3);}
+    .eyebrow-desktop{display:none;}
+    .eyebrow-mobile{display:block;margin-bottom:18px;}
     .hero-cta .btn{width:100%;}
   }
 
@@ -153,12 +170,19 @@
   /* ===== SOLUTION ===== */
   .solution-section{background:var(--navy);color:#fff;}
   .solution-section .section-head h2{color:#fff;}
-  .steps-row{display:flex;gap:0;margin-top:56px;align-items:stretch;}
-  .step-col{flex:1;padding:0 28px;position:relative;}
-  .step-col:not(:last-child){border-right:1px solid rgba(255,255,255,0.12);}
-  .step-num{font-family:'Playfair Display',serif;color:var(--teal);font-size:48px;opacity:0.3;margin-bottom:14px;}
-  .step-title{font-weight:600;color:#fff;font-size:18px;margin-bottom:10px;line-height:1.4;}
-  .step-body{color:rgba(255,255,255,0.75);font-size:15px;line-height:1.65;}
+  .steps-row{display:flex;gap:0;margin-top:56px;align-items:flex-start;}
+  .step-col{flex:1;padding:0 24px;position:relative;}
+  .step-badge{
+    width:44px;height:44px;border-radius:50%;background:var(--teal);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-family:'Bodoni Moda',serif;
+    font-weight:600;font-size:18px;margin-bottom:22px;box-shadow:0 10px 24px -8px rgba(0,184,150,0.55);
+  }
+  .step-title{font-weight:600;color:#fff;font-size:19px;margin-bottom:10px;line-height:1.4;}
+  .step-body{color:rgba(255,255,255,0.72);font-size:15px;line-height:1.65;}
+  .step-arrow{
+    flex:0 0 auto;display:flex;align-items:center;justify-content:center;
+    width:40px;padding-top:10px;color:rgba(255,255,255,0.3);
+  }
   .flow-visual{
     margin-top:48px;border-radius:12px;overflow:hidden;border:1px solid rgba(255,255,255,0.15);
     background:rgba(255,255,255,0.03);
@@ -166,70 +190,117 @@
   .flow-visual img{width:100%;display:block;}
   .flow-visual .mobile-flow{display:none;}
   @media(max-width:860px){
-    .steps-row{flex-direction:column;gap:36px;}
-    .step-col{border-right:none !important;padding:0;}
+    .steps-row{flex-direction:column;gap:8px;}
+    .step-col{padding:0;}
+    .step-arrow{width:auto;padding:4px 0 4px 21px;transform:rotate(90deg);justify-content:flex-start;}
     .flow-visual .desktop-flow{display:none;}
     .flow-visual .mobile-flow{display:block;}
   }
 
   /* ===== OFFER ===== */
   .offer-section{background:var(--offwhite);}
-  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:56px;align-items:start;}
-  .price-card{background:#fff;border:1px solid #E5E7EB;border-radius:12px;padding:36px 30px;}
+  .pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:64px;align-items:start;}
+  .price-card{
+    background:#fff;border:1px solid #ECEDF0;border-radius:12px;padding:36px 30px;
+    transition:transform 220ms var(--ease-out), box-shadow 220ms var(--ease-out);
+  }
+  .price-card:not(.featured):hover{transform:translateY(-4px);box-shadow:0 16px 32px -16px rgba(10,37,64,0.12);}
   .price-card.featured{
     background:var(--navy);color:#fff;border:none;
-    box-shadow:0 30px 60px -20px rgba(10,37,64,0.4);
-    transform:scale(1.03);position:relative;z-index:2;
+    box-shadow:0 0 0 1px rgba(0,184,150,0.45), 0 50px 90px -30px rgba(0,184,150,0.3), 0 30px 60px -20px rgba(10,37,64,0.5);
+    transform:scale(1.06) translateY(-12px);position:relative;z-index:2;
   }
+  .price-card.featured:hover{transform:scale(1.06) translateY(-16px);}
   .price-badge{
-    display:inline-block;background:var(--teal);color:#fff;font-size:11px;font-weight:600;
-    padding:5px 14px;border-radius:20px;margin-bottom:18px;
+    position:absolute;top:-15px;left:50%;transform:translateX(-50%);
+    display:inline-block;background:var(--teal);color:#fff;font-size:11px;font-weight:600;letter-spacing:0.02em;
+    padding:7px 18px;border-radius:20px;white-space:nowrap;box-shadow:0 8px 16px -6px rgba(0,184,150,0.6);
   }
-  .price-name{font-weight:600;color:var(--navy);font-size:18px;margin-bottom:14px;}
-  .price-card.featured .price-name{color:#fff;}
-  .price-amount{font-family:'Playfair Display',serif;font-size:32px;color:var(--navy);}
-  .price-card.featured .price-amount{color:#fff;}
-  .price-period{font-size:14px;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif;}
-  .price-card.featured .price-period{color:rgba(255,255,255,0.6);}
+  .price-name{font-weight:600;color:var(--navy);font-size:17px;margin-bottom:14px;margin-top:6px;}
+  .price-card.featured .price-name{color:#fff;font-size:18px;margin-top:10px;}
+  .price-amount{font-family:'Bodoni Moda',serif;font-size:28px;color:#475569;}
+  .price-card.featured .price-amount{color:#fff;font-size:38px;}
+  .price-period{font-size:13px;color:var(--muted);font-weight:400;font-family:'Inter',sans-serif;}
+  .price-card.featured .price-period{color:rgba(255,255,255,0.6);font-size:14px;}
   .price-note{font-size:11px;color:rgba(255,255,255,0.6);margin-top:6px;}
   .price-tagline{font-size:13px;color:var(--muted);font-style:italic;margin-top:14px;line-height:1.5;}
   .price-card.featured .price-tagline{color:rgba(255,255,255,0.8);}
-  .price-divider{height:1px;background:#E5E7EB;margin:24px 0;}
+  .price-divider{height:1px;background:#ECEDF0;margin:24px 0;}
   .price-card.featured .price-divider{background:rgba(255,255,255,0.15);}
   .price-features{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:28px;}
-  .price-features li{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--nearblack);line-height:1.5;}
-  .price-card.featured .price-features li{color:#fff;}
+  .price-features li{display:flex;align-items:flex-start;gap:10px;font-size:13.5px;color:#4B5566;line-height:1.5;}
+  .price-card.featured .price-features li{color:#fff;font-size:14px;}
   .price-features svg{flex-shrink:0;margin-top:2px;}
   .price-card .btn{width:100%;}
+  .price-card:not(.featured) .price-features svg{stroke:#9CA3AF;}
   @media(max-width:860px){
-    .pricing-grid{grid-template-columns:1fr;}
-    .price-card.featured{transform:none;order:-1;}
+    .pricing-grid{grid-template-columns:1fr;margin-top:48px;}
+    .price-card.featured{transform:none;order:-1;margin-bottom:8px;}
+    .price-card.featured:hover{transform:none;}
   }
 
   /* ===== PROOF ===== */
   .stat-bar{display:flex;justify-content:center;gap:0;margin-top:48px;text-align:center;}
   .stat{flex:1;padding:0 24px;}
   .stat:not(:last-child){border-right:1px solid #E5E7EB;}
-  .stat-num{font-family:'Playfair Display',serif;color:var(--teal);font-size:48px;}
-  .stat-label{color:var(--muted);font-size:14px;margin-top:8px;}
+  .stat-num{font-family:'Bodoni Moda',serif;color:var(--teal);font-size:48px;}
+  .stat-label{color:var(--navy);font-size:14px;font-weight:500;margin-top:8px;}
+  .stat-context{color:var(--muted);font-size:12.5px;margin-top:5px;line-height:1.5;max-width:200px;margin-left:auto;margin-right:auto;}
+  .stat-footnote{text-align:center;color:var(--muted);font-size:12.5px;font-style:italic;margin-top:28px;line-height:1.6;max-width:620px;margin-left:auto;margin-right:auto;}
   .case-study{
     margin-top:56px;background:var(--offwhite);border:1.5px dashed #D1D5DB;border-radius:12px;
     padding:32px;text-align:center;
   }
   .case-study p{color:var(--muted);font-style:italic;font-size:14px;margin-bottom:8px;}
-  .wa-mockup{display:grid;grid-template-columns:1fr 1fr;gap:32px;margin-top:56px;}
-  .wa-col-head{font-size:12px;text-align:center;margin-bottom:18px;font-weight:600;letter-spacing:0.02em;}
-  .wa-col-head.before{color:var(--muted);}
-  .wa-col-head.after{color:var(--teal);}
-  .chat-col{display:flex;flex-direction:column;gap:14px;}
-  .bubble{max-width:85%;border-radius:18px;padding:12px 16px;font-size:14px;line-height:1.45;}
+  .wa-mockup{display:flex;align-items:center;justify-content:center;gap:0;margin-top:64px;}
+  .wa-divider{
+    flex:0 0 auto;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 28px;
+    color:var(--muted);
+  }
+  .wa-divider .arrow-badge{
+    width:40px;height:40px;border-radius:50%;background:var(--offwhite);border:1px solid #E5E7EB;
+    display:flex;align-items:center;justify-content:center;color:var(--teal);
+  }
+  .wa-divider span{font-size:11px;font-weight:600;letter-spacing:0.04em;text-transform:uppercase;white-space:nowrap;}
+  .phone-frame{
+    flex:1 1 0;max-width:320px;background:#fff;border-radius:22px;overflow:hidden;
+    border:1px solid #E5E7EB;box-shadow:0 24px 48px -24px rgba(10,37,64,0.2), 0 4px 12px -4px rgba(10,37,64,0.06);
+  }
+  .phone-frame.dim{opacity:0.92;}
+  .phone-header{
+    background:var(--navy);display:flex;align-items:center;gap:10px;padding:14px 16px;color:#fff;
+  }
+  .phone-header .avatar{
+    width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,0.15);
+    display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;flex-shrink:0;
+  }
+  .phone-header .who{font-size:13px;font-weight:500;line-height:1.3;}
+  .phone-header .status{font-size:11px;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:5px;}
+  .phone-header .status .dot{width:6px;height:6px;border-radius:50%;background:#9CA3AF;}
+  .phone-header.online .status .dot{background:var(--teal);}
+  .phone-body{background:#F4F2EE;padding:18px 14px;display:flex;flex-direction:column;gap:10px;min-height:300px;}
   .bubble-wrap{display:flex;flex-direction:column;}
   .bubble-wrap.right{align-items:flex-end;}
   .bubble-wrap.left{align-items:flex-start;}
-  .bubble.grey{background:#EDEFF3;color:var(--nearblack);}
-  .bubble.teal{background:var(--teal);color:#fff;}
-  .bubble-time{font-size:11px;color:var(--muted);margin-top:4px;}
-  @media(max-width:860px){.wa-mockup{grid-template-columns:1fr;gap:40px;}}
+  .bubble{
+    max-width:88%;border-radius:14px;padding:10px 14px 16px;font-size:14px;line-height:1.5;position:relative;
+    box-shadow:0 1px 2px rgba(10,37,64,0.05);
+  }
+  .bubble.grey{background:#fff;color:var(--nearblack);border:1px solid #E9E9E9;}
+  .bubble.teal{background:#DDF7EF;color:#0A2540;}
+  .bubble-time{
+    position:absolute;bottom:5px;right:14px;font-size:10px;color:var(--muted);opacity:0.7;
+  }
+  .wa-result{
+    text-align:center;font-size:12.5px;font-weight:600;padding:10px;margin-top:2px;border-radius:8px;
+  }
+  .wa-result.lost{background:rgba(217,119,6,0.08);color:#92590A;}
+  .wa-result.won{background:rgba(0,184,150,0.1);color:#067A5F;}
+  @media(max-width:860px){
+    .wa-mockup{flex-direction:column;gap:18px;}
+    .wa-divider{flex-direction:row;padding:6px 0;}
+    .phone-frame{max-width:100%;width:100%;}
+  }
 
   /* ===== FINAL CTA ===== */
   .final-cta{background:var(--teal);text-align:center;}
@@ -267,7 +338,9 @@
     padding:48px 40px;text-align:center;box-shadow:0 30px 60px -30px rgba(10,37,64,0.15);
   }
   .survey-trigger-card .btn{width:100%;}
-  .survey-meta{display:flex;justify-content:center;gap:20px;margin-top:18px;font-size:12px;color:var(--muted);}
+  .survey-meta{display:flex;justify-content:center;gap:22px;margin-top:18px;font-size:12px;color:var(--muted);}
+  .survey-meta span{display:flex;align-items:center;gap:6px;}
+  .survey-meta svg{flex-shrink:0;color:var(--teal);}
 
   /* ===== SURVEY OVERLAY (Perspective style) ===== */
   #survey-overlay{
@@ -278,18 +351,21 @@
   #survey-overlay.open{display:flex;}
   #survey-progress{position:absolute;top:0;left:0;height:3px;background:var(--teal);transition:width 0.4s ease;width:0%;z-index:5;}
   .survey-topbar{
-    height:52px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
+    height:64px;flex-shrink:0;display:flex;align-items:center;justify-content:space-between;
     padding:0 20px;position:relative;z-index:5;
   }
-  .survey-topbar .tb-left, .survey-topbar .tb-right{display:flex;align-items:center;gap:14px;width:80px;}
+  .survey-topbar .tb-left, .survey-topbar .tb-right{display:flex;align-items:center;gap:14px;width:88px;}
   .survey-topbar .tb-right{justify-content:flex-end;}
   .survey-back, .survey-close{
-    background:transparent;width:28px;height:28px;display:flex;align-items:center;justify-content:center;
-    color:rgba(10,37,64,0.4);visibility:hidden;
+    background:transparent;width:44px;height:44px;display:flex;align-items:center;justify-content:center;
+    color:rgba(10,37,64,0.45);visibility:hidden;border-radius:50%;
+    transition:background 150ms var(--ease-out), color 150ms var(--ease-out);
   }
+  .survey-back:hover, .survey-close:hover{background:rgba(10,37,64,0.06);color:var(--navy);}
+  .survey-back:focus-visible, .survey-close:focus-visible{outline:2px solid var(--teal);outline-offset:1px;}
   .survey-back.show{visibility:visible;}
   .survey-close{visibility:visible;}
-  .survey-brand{font-size:13px;font-weight:500;color:rgba(10,37,64,0.5);}
+  .survey-brand img{height:24px;display:block;}
   .survey-counter{font-size:12px;color:var(--muted);white-space:nowrap;}
   .survey-body{flex:1;display:flex;flex-direction:column;position:relative;overflow:hidden;}
   .survey-step{
@@ -373,15 +449,17 @@
 <section class="hero" id="hero">
   <img class="hero-bg" src="./assets/hero-clinic.png" alt="Cabinet dentaire moderne Casablanca" loading="lazy">
   <div class="hero-overlay"></div>
+  <div class="hero-grain"></div>
   <div class="hero-content">
-    <span class="eyebrow">Cabinets dentaires · Casablanca</span>
-    <h1 class="hero-headline hero-headline-desktop">Votre cabinet reçoit des demandes.<br>Combien restent sans réponse ?</h1>
-    <h1 class="hero-headline hero-headline-mobile">Des demandes qui disparaissent.<br>On change ça.</h1>
-    <p class="hero-sub">ClinicPro transforme votre site en machine à patients — avec suivi automatique, publicité ciblée et zéro lead perdu.</p>
+    <span class="eyebrow eyebrow-desktop">CRM &amp; automatisation patients · Cabinets dentaires de Casablanca</span>
+    <span class="eyebrow eyebrow-mobile">Cabinets dentaires · Casablanca</span>
+    <h1 class="hero-headline hero-headline-desktop"><em>60 %</em> de vos demandes en ligne<br>disparaissent sans réponse.</h1>
+    <h1 class="hero-headline hero-headline-mobile"><em>60 %</em> de vos demandes<br>disparaissent. On les récupère.</h1>
+    <p class="hero-sub">ClinicPro répond à chaque patient en moins de 2 minutes, relance par WhatsApp et remplit votre agenda — automatiquement, jour et nuit.</p>
     <div class="hero-cta">
       <button class="btn btn-teal js-open-survey" type="button">Vérifier si mon cabinet est éligible →</button>
     </div>
-    <p class="hero-trust">Réponse garantie en 2 heures · Aucun engagement · 100% adapté Casablanca</p>
+    <p class="hero-trust">Réponse patient en moins de 2 minutes · Aucun engagement · Réservé aux cabinets de Casablanca</p>
   </div>
   <div class="scroll-indicator" id="scrollIndicator">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -425,17 +503,19 @@
     </div>
     <div class="steps-row">
       <div class="step-col reveal" style="transition-delay:0ms;">
-        <div class="step-num">01</div>
+        <div class="step-badge">01</div>
         <div class="step-title">Une page qui convertit, pas qui informe.</div>
         <div class="step-body">Pas un site vitrine. Une page pensée pour qu'un visiteur devienne une demande en moins de 60 secondes. Mobile, rapide, professionnelle.</div>
       </div>
+      <div class="step-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       <div class="step-col reveal" style="transition-delay:100ms;">
-        <div class="step-num">02</div>
+        <div class="step-badge">02</div>
         <div class="step-title">Des publicités qui trouvent vos patients.</div>
         <div class="step-body">Nous gérons vos campagnes Meta Ads pour toucher exactement les personnes qui cherchent un dentiste à Casablanca — et uniquement elles.</div>
       </div>
+      <div class="step-arrow" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
       <div class="step-col reveal" style="transition-delay:200ms;">
-        <div class="step-num">03</div>
+        <div class="step-badge">03</div>
         <div class="step-title">Le système relance. Vous n'oubliez plus personne.</div>
         <div class="step-body">Dès qu'une demande arrive, le patient reçoit un message automatique. Si personne ne rappelle dans les 2 heures, le système envoie un suivi. Aucun patient ne tombe dans l'oubli.</div>
       </div>
@@ -468,11 +548,11 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00B896" stroke-width="2.5" style="margin-right:2px;"><polyline points="20 6 9 17 4 12"/></svg>Tableau de bord leads partagé</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00B896" stroke-width="2.5" style="margin-right:2px;"><polyline points="20 6 9 17 4 12"/></svg>Accompagnement et support 30 jours</li>
         </ul>
-        <button class="btn btn-outline-navy js-open-survey" type="button">Démarrer avec Lead Machine</button>
+        <button class="btn btn-ghost js-open-survey" type="button">Démarrer avec Lead Machine →</button>
       </div>
 
       <div class="price-card featured reveal" style="transition-delay:100ms;">
-        <span class="price-badge">Le plus choisi</span>
+        <span class="price-badge">★ Le plus choisi</span>
         <div class="price-name">Lead Machine + Publicité</div>
         <div><span class="price-amount">5 000 MAD</span> <span class="price-period">setup</span></div>
         <div><span class="price-amount">2 500 MAD</span> <span class="price-period">/ mois</span></div>
@@ -502,7 +582,7 @@
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00B896" stroke-width="2.5" style="margin-right:2px;"><polyline points="20 6 9 17 4 12"/></svg>Demande d'avis post-consultation automatisée</li>
           <li><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00B896" stroke-width="2.5" style="margin-right:2px;"><polyline points="20 6 9 17 4 12"/></svg>Appel stratégique mensuel</li>
         </ul>
-        <button class="btn btn-outline-navy js-open-survey" type="button">Vérifier mon éligibilité →</button>
+        <button class="btn btn-ghost js-open-survey" type="button">Vérifier mon éligibilité →</button>
       </div>
 
     </div>
@@ -513,34 +593,70 @@
 <section style="background:var(--white);">
   <div class="container">
     <div class="section-head center reveal">
-      <span class="eyebrow">Résultats</span>
-      <h2>Ce que nos cabinets partenaires ont changé.</h2>
+      <span class="eyebrow">Pourquoi ça marche</span>
+      <h2>Ce que le système change, concrètement.</h2>
     </div>
     <div class="stat-bar reveal">
-      <div class="stat"><div class="stat-num">+340%</div><div class="stat-label">Augmentation moyenne des demandes en ligne</div></div>
-      <div class="stat"><div class="stat-num">&lt; 2 min</div><div class="stat-label">Délai de notification après soumission</div></div>
-      <div class="stat"><div class="stat-num">1 patient</div><div class="stat-label">Suffit à couvrir l'investissement mensuel</div></div>
+      <div class="stat">
+        <div class="stat-num">+340%</div>
+        <div class="stat-label">Demandes en ligne</div>
+        <div class="stat-context">Potentiel basé sur les benchmarks du secteur dentaire digital après mise en place d'un système de réponse automatisé*</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">&lt; 2 min</div>
+        <div class="stat-label">Délai de réponse</div>
+        <div class="stat-context">Entre la soumission du formulaire et la notification WhatsApp envoyée au cabinet</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">1 patient</div>
+        <div class="stat-label">Couvre l'abonnement</div>
+        <div class="stat-context">Calculé sur la formule Lead Machine + Publicité et un panier moyen à Casablanca</div>
+      </div>
     </div>
+    <p class="stat-footnote reveal">* Basé sur des benchmarks sectoriels (santé digitale, Maroc 2024) et sur le fonctionnement mesurable du système. ClinicPro est en phase de lancement à Casablanca — les résultats réels varient selon le cabinet.</p>
 
     <div class="case-study reveal">
-      <p>[ Photo cabinet + nom du cabinet + quartier Casablanca ]</p>
-      <p>[ Citation du médecin ou responsable ]</p>
-      <p>[ Résultat : X nouveaux patients en Y semaines ]</p>
+      <p style="font-style:normal;font-size:15px;color:var(--navy);font-weight:600;margin-bottom:6px;">Les premiers cabinets partenaires arrivent.</p>
+      <p style="font-style:normal;">Nous publierons ici la photo, le nom et les résultats du premier cabinet accompagné par ClinicPro à Casablanca — avec son accord.</p>
     </div>
 
     <div class="wa-mockup reveal">
-      <div class="chat-col">
-        <div class="wa-col-head before">Sans ClinicPro</div>
-        <div class="bubble-wrap left"><div class="bubble grey">Bonjour, je voudrais un rdv pour un détartrage</div><div class="bubble-time">21h34</div></div>
-        <div class="bubble-wrap left"><div class="bubble grey">Bonjour, vous êtes disponibles ?</div><div class="bubble-time">09h12, le lendemain</div></div>
-        <div class="bubble-wrap left"><div class="bubble grey">Ok je vais appeler un autre cabinet</div><div class="bubble-time">11h05</div></div>
+      <div class="phone-frame dim">
+        <div class="phone-header">
+          <div class="avatar"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><path d="M13.73 21a2 2 0 0 1-3.46 0"/><path d="M18.63 13A17.89 17.89 0 0 1 18 8"/><path d="M6.26 6.26A5.86 5.86 0 0 0 6 8c0 7-3 9-3 9h14"/><path d="M18 8a6 6 0 0 0-9.33-5"/><line x1="1" y1="1" x2="23" y2="23"/></svg></div>
+          <div>
+            <div class="who">Sans ClinicPro</div>
+            <div class="status"><span class="dot"></span>Pas de suivi</div>
+          </div>
+        </div>
+        <div class="phone-body">
+          <div class="bubble-wrap left"><div class="bubble grey">Bonjour, je voudrais un rdv pour un détartrage<span class="bubble-time">21h34</span></div></div>
+          <div class="bubble-wrap left"><div class="bubble grey">Bonjour, vous êtes disponibles ?<span class="bubble-time">09h12</span></div></div>
+          <div class="bubble-wrap left"><div class="bubble grey">Ok je vais appeler un autre cabinet<span class="bubble-time">11h05</span></div></div>
+          <div class="wa-result lost">Patient perdu — 14h sans réponse</div>
+        </div>
       </div>
-      <div class="chat-col">
-        <div class="wa-col-head after">Avec ClinicPro</div>
-        <div class="bubble-wrap left"><div class="bubble grey">[Formulaire soumis sur la page ClinicPro]</div><div class="bubble-time">21h34</div></div>
-        <div class="bubble-wrap right"><div class="bubble teal">Bonjour, nous avons bien reçu votre demande. Notre équipe vous contacte demain matin.</div><div class="bubble-time">21h34</div></div>
-        <div class="bubble-wrap right"><div class="bubble teal">Bonjour, c'est le Cabinet Dr. Bennani. On peut vous proposer jeudi à 10h ?</div><div class="bubble-time">09h00, le lendemain</div></div>
-        <div class="bubble-wrap left"><div class="bubble grey">Parfait, merci !</div><div class="bubble-time">09h02</div></div>
+
+      <div class="wa-divider" aria-hidden="true">
+        <div class="arrow-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></div>
+        <span>Avec<br>ClinicPro</span>
+      </div>
+
+      <div class="phone-frame">
+        <div class="phone-header online">
+          <div class="avatar">DB</div>
+          <div>
+            <div class="who">Cabinet Dr. Bennani</div>
+            <div class="status"><span class="dot"></span>ClinicPro actif</div>
+          </div>
+        </div>
+        <div class="phone-body">
+          <div class="bubble-wrap left"><div class="bubble grey">Formulaire soumis sur la page ClinicPro<span class="bubble-time">21h34</span></div></div>
+          <div class="bubble-wrap right"><div class="bubble teal">Bonjour ! Nous avons bien reçu votre demande. Notre équipe vous contacte demain matin.<span class="bubble-time">21h34</span></div></div>
+          <div class="bubble-wrap right"><div class="bubble teal">Bonjour, c'est le Cabinet Dr. Bennani. On peut vous proposer jeudi à 10h ?<span class="bubble-time">09h00</span></div></div>
+          <div class="bubble-wrap left"><div class="bubble grey">Parfait, merci !<span class="bubble-time">09h02</span></div></div>
+          <div class="wa-result won">Rendez-vous confirmé en 12h</div>
+        </div>
       </div>
     </div>
   </div>
@@ -557,9 +673,9 @@
     <div class="survey-trigger-card reveal">
       <button class="btn btn-teal js-open-survey" type="button" style="width:100%;">Commencer →</button>
       <div class="survey-meta">
-        <span>⏱ 90 secondes</span>
-        <span>🔒 Confidentiel</span>
-        <span>⚡ Réponse en 2h</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>90 secondes</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Confidentiel</span>
+        <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>Réponse en 2h</span>
       </div>
     </div>
   </div>
@@ -603,18 +719,19 @@
 </a>
 
 <!-- ===== SURVEY OVERLAY ===== -->
-<div id="survey-overlay">
+<div id="survey-overlay" role="dialog" aria-modal="true" aria-labelledby="surveyDialogTitle" tabindex="-1">
+  <h2 id="surveyDialogTitle" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">Vérification d'éligibilité ClinicPro</h2>
   <div id="survey-progress"></div>
   <div class="survey-topbar">
     <div class="tb-left">
-      <button class="survey-back" id="surveyBack" type="button" aria-label="Retour">
+      <button class="survey-back" id="surveyBack" type="button" aria-label="Étape précédente">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
     </div>
-    <div class="survey-brand">ClinicPro</div>
+    <div class="survey-brand"><img src="./assets/logo-clinicpro.png" alt="ClinicPro by BoostConnect"></div>
     <div class="tb-right">
       <span class="survey-counter" id="surveyCounter">1 / 6</span>
-      <button class="survey-close" id="surveyClose" type="button" aria-label="Fermer">
+      <button class="survey-close" id="surveyClose" type="button" aria-label="Fermer le formulaire">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg>
       </button>
     </div>
@@ -806,13 +923,25 @@
     updateChrome(newIndex);
   }
 
-  function openSurvey(){
+  var lastTrigger = null;
+
+  function getFocusable(){
+    return Array.prototype.slice.call(overlay.querySelectorAll(
+      'button, a[href], input, [tabindex]:not([tabindex="-1"])'
+    )).filter(function(el){ return el.offsetParent !== null; });
+  }
+
+  function openSurvey(e){
+    lastTrigger = e && e.currentTarget ? e.currentTarget : document.activeElement;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
+    var first = overlay.querySelector('#inputPrenom') || getFocusable()[0];
+    if(first){ first.focus(); }
   }
   function closeSurvey(){
     overlay.classList.remove('open');
     document.body.style.overflow = '';
+    if(lastTrigger && typeof lastTrigger.focus === 'function'){ lastTrigger.focus(); }
   }
 
   document.querySelectorAll('.js-open-survey').forEach(function(btn){
@@ -825,9 +954,19 @@
 
   document.addEventListener('keydown', function(e){
     if(!overlay.classList.contains('open')) return;
-    if(e.key === 'Escape'){ closeSurvey(); }
+    if(e.key === 'Escape'){ closeSurvey(); return; }
     if(e.key === 'Backspace' && document.activeElement.tagName !== 'INPUT'){
       if(currentIndex > 0 && currentIndex < 6){ goTo(currentIndex - 1, 'back'); }
+    }
+    if(e.key === 'Tab'){
+      var focusable = getFocusable();
+      if(focusable.length === 0) return;
+      var first = focusable[0], last = focusable[focusable.length - 1];
+      if(e.shiftKey && document.activeElement === first){
+        e.preventDefault(); last.focus();
+      } else if(!e.shiftKey && document.activeElement === last){
+        e.preventDefault(); first.focus();
+      }
     }
   });
 
