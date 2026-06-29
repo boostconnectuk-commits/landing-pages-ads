@@ -183,6 +183,20 @@ export function recommendedTrack(flags: Flags): "A" | "B" {
   return "B";
 }
 
+export function computeRecommendedTier(answers: Answers): string {
+  const presence = answers.presence || [];
+  const presenceCount = presence.includes("none") ? 0 : presence.length;
+
+  let tier = "Essentiel";
+  if (presenceCount <= 2 || presence.includes("none")) {
+    tier = "Croissance"; // low/no online presence — ads are mandatory
+  }
+  if (answers.budget === "over_7000") {
+    tier = "Système Complet";
+  }
+  return tier;
+}
+
 const MOROCCAN_MOBILE_REGEX = /^[67]\d{8}$/;
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 

@@ -13,6 +13,7 @@ import {
   TOTAL_STEPS,
   TOTAL_QUESTIONS,
   computeFlags,
+  computeRecommendedTier,
   validateContact,
   saveProgress,
   loadProgress,
@@ -21,13 +22,36 @@ import {
   type ContactInfo,
 } from "@/lib/questionnaire";
 
-const WEBHOOK_URL = "YOUR_WEBHOOK_URL_HERE";
+const WEBHOOK_URL = process.env.NEXT_PUBLIC_MAKE_WEBHOOK_URL || "YOUR_WEBHOOK_URL_HERE";
 const EMPTY_CONTACT: ContactInfo = {
   fullName: "",
   whatsapp: "",
   cabinetName: "",
   email: "",
 };
+
+const UTM_KEYS = ["utm_source", "utm_campaign", "utm_content"] as const;
+
+function captureUtmOnce() {
+  if (typeof window === "undefined") return;
+  const urlParams = new URLSearchParams(window.location.search);
+  UTM_KEYS.forEach((key) => {
+    const value = urlParams.get(key);
+    if (value) sessionStorage.setItem(key, value);
+  });
+}
+
+function getUtm() {
+  if (typeof window === "undefined") {
+    return { source: "direct", campaign: "", content: "" };
+  }
+  const urlParams = new URLSearchParams(window.location.search);
+  return {
+    source: urlParams.get("utm_source") || sessionStorage.getItem("utm_source") || "direct",
+    campaign: urlParams.get("utm_campaign") || sessionStorage.getItem("utm_campaign") || "",
+    content: urlParams.get("utm_content") || sessionStorage.getItem("utm_content") || "",
+  };
+}
 
 function QuestionnaireInner() {
   const router = useRouter();
@@ -47,6 +71,7 @@ function QuestionnaireInner() {
   useEffect(() => {
     if (restoredRef.current) return;
     restoredRef.current = true;
+    captureUtmOnce();
     const saved = loadProgress();
     if (saved) {
       setAnswers(saved.answers);
@@ -117,33 +142,58 @@ function QuestionnaireInner() {
     setSubmitting(true);
 
     const flags = computeFlags(answers);
+    const qualified = !flags.budget_disqualified;
+    const recommendedTier = computeRecommendedTier(answers);
+
+    const fullNameTrimmed = contact.fullName.trim();
+    const [firstName, ...rest] = fullNameTrimmed.split(" ");
+    const lastName = rest.join(" ");
+
     const payload = {
-      ...answers,
-      fullName: contact.fullName.trim(),
-      whatsapp: `+212${contact.whatsapp.trim()}`,
-      cabinetName: contact.cabinetName.trim(),
-      email: contact.email.trim(),
-      ...flags,
+      submission_id: `lead_${Date.now()}`,
       timestamp: new Date().toISOString(),
-      source: "clinicpro-questionnaire-v2",
-      sourceParams: typeof window !== "undefined" ? window.location.search : "",
+      contact: {
+        first_name: firstName || "",
+        last_name: lastName || "",
+        whatsapp: `+212${contact.whatsapp.trim()}`,
+        cabinet_name: contact.cabinetName.trim(),
+        email: contact.email.trim(),
+      },
+      answers: {
+        role: answers.role || "",
+        acquisition_channel: answers.channel || "",
+        online_presence: answers.presence || [],
+        current_volume: answers.volume || "",
+        target_volume: answers.goal || "",
+        advertising_status: answers.ads || "",
+        timeline: answers.timeline || "",
+        investment: answers.budget || "",
+      },
+      computed: {
+        qualified,
+        urgent: flags.urgent,
+        decision_maker: flags.decision_maker,
+        recommended_tier: recommendedTier,
+      },
+      utm: getUtm(),
     };
 
     try {
-      await fetch(WEBHOOK_URL, {
+      const response = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-    } catch {
-      console.log("Webhook error: lead not captured");
+      if (!response.ok) throw new Error("Webhook failed");
+    } catch (error) {
+      console.error("Submission error:", error);
+      // Fail open: still confirm the lead to the user rather than block on a backend hiccup.
     }
 
     clearProgress();
-    const firstName = contact.fullName.trim().split(" ")[0] || "";
-    const status = flags.budget_disqualified ? "disqualified" : "qualified";
+    const status = qualified ? "qualified" : "disqualified";
     router.push(
-      `/questionnaire/merci?status=${status}&name=${encodeURIComponent(firstName)}`
+      `/questionnaire/merci?status=${status}&name=${encodeURIComponent(firstName || "")}`
     );
   };
 
